@@ -1,1 +1,1 @@
-(function(){const s=atob(window.__OCEAN_APP_B64||'');let u='';for(let i=0;i<s.length;i++)u+=String.fromCharCode(s.charCodeAt(i));(0,eval)(u);delete window.__OCEAN_APP_B64;})();
+(async function(){const b=Uint8Array.from(atob(window.__OCEAN_APP_GZIP_B64||''),c=>c.charCodeAt(0));const ds=new DecompressionStream('gzip');const txt=await new Response(new Blob([b]).stream().pipeThrough(ds)).text();(0,eval)(txt);delete window.__OCEAN_APP_GZIP_B64;})();
