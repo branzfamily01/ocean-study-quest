@@ -1,4 +1,4 @@
-const CACHE='ocean-study-quest-v10';
+const CACHE='ocean-study-quest-v10b';
 const ASSETS=[
   "./",
   "./index.html",
@@ -16,6 +16,7 @@ const ASSETS=[
   "./js/audio.js?v=10",
   "./js/app-gzip.js?v=10",
   "./js/app-loader.js?v=10",
+  "./js/growth-v10.js?v=10",
   "./js/xp-recovery.js?v=10",
   "./assets/growth/growth-atlas-a.webp?v=10",
   "./assets/growth/growth-atlas-b.webp?v=10",
