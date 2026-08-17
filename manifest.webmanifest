@@ -1,0 +1,19 @@
+{
+  "name": "Ocean Study Quest - うみのべんきょう",
+  "short_name": "Ocean Study",
+  "description": "勉強で海の生き物を育て、魚釣りとStudy Raceを楽しむ学習アプリ",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#061326",
+  "theme_color": "#061326",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/ui/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
