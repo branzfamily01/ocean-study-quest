@@ -33,6 +33,7 @@ window.OceanStore = (() => {
         ...(oldSettings?{...(Array.isArray(oldSettings.subjects)?{subjects:oldSettings.subjects}:{}),pin:oldSettings.parentPassword||'1234'}:{})
       },
       game:{coins:80,pearls:0,bait:2,raceEnergy:1,fishDex:{},catches:[],coral:0,dailyKey:'',dailyClaimed:false},
+      xpVault: oldXp || xp,
       reflections:{},
       achievements:[],
       lastScreen:'home'
@@ -43,9 +44,12 @@ window.OceanStore = (() => {
   state.xp={...defaults().xp,...(state.xp||{})};
   state.settings={...defaults().settings,...(state.settings||{})};
   state.game={...defaults().game,...(state.game||{})};
+  state.xpVault={...defaults().xp,...(state.xpVault||{})};
   state.tasks=state.tasks||{}; state.logs=state.logs||{}; state.reflections=state.reflections||{};
 
   function save(){
+    state.xpVault = state.xpVault || {};
+    Object.keys(state.xp||{}).forEach(k=>{ state.xpVault[k]=Math.max(Number(state.xpVault[k]||0), Number(state.xp[k]||0)); });
     localStorage.setItem(KEY,JSON.stringify(state));
     localStorage.setItem(OLD_KEYS.xp,JSON.stringify(state.xp));
     localStorage.setItem(OLD_KEYS.active,JSON.stringify(state.active));
@@ -76,9 +80,41 @@ window.OceanStore = (() => {
   function restore(json){
     const obj=typeof json==='string'?JSON.parse(json):json;
     if(!obj || typeof obj!=='object' || !obj.xp) throw new Error('バックアップ形式が正しくありません');
-    state={...defaults(),...obj}; save(); window.dispatchEvent(new CustomEvent('ocean:state',{detail:state}));
+    state={...defaults(),...obj};
+    state.xp={...defaults().xp,...(obj.xp||{})};
+    state.xpVault={...defaults().xp,...(obj.xpVault||obj.xp||{})};
+    state.settings={...defaults().settings,...(obj.settings||{})};
+    state.game={...defaults().game,...(obj.game||{})};
+    save();
+    window.dispatchEvent(new CustomEvent('ocean:state',{detail:state}));
   }
   function resetGameOnly(){ set(s=>{s.game=defaults().game; return s;}); }
+  function saveXpVault(){
+    set(s=>{
+      s.xpVault={...(s.xpVault||{})};
+      Object.keys(s.xp||{}).forEach(k=>{ s.xpVault[k]=Math.max(Number(s.xpVault[k]||0), Number(s.xp[k]||0)); });
+      return s;
+    });
+  }
+  function restoreXpFromVault(){
+    return set(s=>{
+      const base=Object.fromEntries(Object.keys(defaults().xp).map(k=>[k,0]));
+      const vault=s.xpVault||{};
+      s.xp={...base,...(s.xp||{})};
+      Object.keys(base).forEach(k=>{s.xp[k]=Math.max(Number(s.xp[k]||0),Number(vault[k]||0));});
+      return s;
+    });
+  }
+  function restoreOneXp(id,value){
+    return set(s=>{
+      const v=Math.max(0,Math.min(999999,Math.floor(Number(value)||0)));
+      if(!(id in defaults().xp)) throw new Error('キャラクターが見つかりません');
+      s.xp[id]=v;
+      s.xpVault=s.xpVault||{};
+      s.xpVault[id]=Math.max(Number(s.xpVault[id]||0),v);
+      return s;
+    });
+  }
   save();
-  return {KEY,get,set,update,save,today,addTask,backup,restore,resetGameOnly};
+  return {KEY,get,set,update,save,today,addTask,backup,restore,resetGameOnly,saveXpVault,restoreXpFromVault,restoreOneXp};
 })();
