@@ -3,6 +3,18 @@ window.OceanData = (() => {
   const XP_PER_LEVEL = 100;
   const SUBJECTS = ['国語','算数','理科','社会','英語','その他'];
   const MODES = ['インプット','問題を解く','お直し','暗記','音読','その他'];
+  const GROWTH_SPRITES = {
+    jellyfish:{url:'assets/growth/growth-atlas-a.webp?v=10',row:0},
+    starfish:{url:'assets/growth/growth-atlas-a.webp?v=10',row:1},
+    turtle:{url:'assets/growth/growth-atlas-a.webp?v=10',row:2},
+    dolphin:{url:'assets/growth/growth-atlas-a.webp?v=10',row:3},
+    seahorse:{url:'assets/growth/growth-atlas-a.webp?v=10',row:4},
+    crab:{url:'assets/growth/growth-atlas-b.webp?v=10',row:0},
+    whale:{url:'assets/growth/growth-atlas-b.webp?v=10',row:1},
+    octopus:{url:'assets/growth/growth-atlas-b.webp?v=10',row:2},
+    clownfish:{url:'assets/growth/growth-atlas-b.webp?v=10',row:3},
+    anglerfish:{url:'assets/growth/growth-atlas-b.webp?v=10',row:4}
+  };
   const CREATURES = [
     {id:'jellyfish',name:'クラゲのルミィ',short:'ルミィ',color:'#c5a7ff',accent:'#7c4dff',element:'水',description:'ふわふわ漂う神秘のこ'},
     {id:'starfish',name:'ヒトデのステラ',short:'ステラ',color:'#ffd080',accent:'#ff7a45',element:'光',description:'キラキラ輝く海の星'},
@@ -14,7 +26,7 @@ window.OceanData = (() => {
     {id:'octopus',name:'タコのオクト',short:'オクト',color:'#d9a1ff',accent:'#8d44cf',element:'謎',description:'頭がよくて変幻自在'},
     {id:'clownfish',name:'カクレクマノミのコーラル',short:'コーラル',color:'#ffb05b',accent:'#ef6c24',element:'勇',description:'どこまでも前に進む勇者'},
     {id:'anglerfish',name:'チョウチンアンコウのアン',short:'アン',color:'#aab9d8',accent:'#58637c',element:'闇',description:'深い海を照らす光'}
-  ].map(c => ({...c, stages:(window.CREATURE_IMAGE_DATA?.[c.id]?.stages||[]),adult:(window.CREATURE_IMAGE_DATA?.[c.id]?.adult||'')}));
+  ].map(c => ({...c, stages:(window.CREATURE_IMAGE_DATA?.[c.id]?.stages||[]),adult:(window.CREATURE_IMAGE_DATA?.[c.id]?.adult||''),sprite:GROWTH_SPRITES[c.id]||null}));
 
   const FISH = [
     {id:'sardine',name:'キラキライワシ',emoji:'🐟',rarity:1,coins:20,color:'#9bd6f4'},
