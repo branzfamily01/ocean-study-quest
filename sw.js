@@ -1,4 +1,4 @@
-const CACHE='ocean-study-quest-v4';
+const CACHE='ocean-study-quest-v7';
 const ASSETS=[
   "./",
   "./index.html",
@@ -15,6 +15,7 @@ const ASSETS=[
   "./js/audio.js",
   "./js/app-gzip.js",
   "./js/app-loader.js",
+  "./js/xp-recovery.js",
   "./manifest.webmanifest",
   "./assets/ui/icon.svg"
 ];
