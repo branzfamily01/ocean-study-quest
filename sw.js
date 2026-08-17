@@ -1,4 +1,4 @@
-const CACHE='ocean-study-quest-v7';
+const CACHE='ocean-study-quest-v8';
 const ASSETS=[
   "./",
   "./index.html",
